@@ -1,0 +1,5 @@
+FROM debian:10.3-slim
+ARG APP_FILE
+COPY ${APP_FILE} app
+EXPOSE 8080
+CMD ["/app"]

@@ -1,0 +1,15 @@
+micronaut:
+  application:
+    name: footballmanager
+  datasource:
+    url: jdbc:postgresql://localhost:5432/footballmanager
+datasources:
+  default:
+    url: ${micronaut.datasource.url}
+    driverClassName: org.postgresql.Driver
+    username: footballmanager
+    password: secret
+    schema-generate: CREATE_DROP
+    dialect: POSTGRES
+    maximumPoolSize: 15
+    minimumIdle: 5

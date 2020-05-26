@@ -1,0 +1,8 @@
+FROM gcr.io/distroless/java:11
+ARG JAR_FILE
+COPY ${JAR_FILE} app.jar
+#User nonroot (ID 65532) is a user created by distroless images
+#See https://github.com/GoogleContainerTools/distroless/issues/235
+USER 65532
+EXPOSE 8080
+CMD ["/app.jar"]

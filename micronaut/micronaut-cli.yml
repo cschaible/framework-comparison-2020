@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: info.novatec
+testFramework: kotlintest
+sourceLanguage: kotlin
+buildTool: gradle
+features: [annotation-api, app-name, data, data-jdbc, docker, graalvm, gradle, h2, http-client, jdbc-hikari, kotlin, kotlin-application, kotlintest, logback, netty-server, readme, shade, yaml]

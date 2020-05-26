@@ -33,3 +33,10 @@ Thumbs.db
 .gradle/
 build/
 target/
+
+# JMeter
+jmeter.log
+REPORT*
+
+# Python
+__pycache__

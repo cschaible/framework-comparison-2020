@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    hikari:
+      maximumPoolSize: 15
+      minimumIdle: 5
+
+    url: jdbc:postgresql://localhost:5432/footballmanager
+    username: footballmanager
+    password: secret
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: false
+    properties:
+      hibernate:
+        id:
+          new_generator_mappings: true
+        implicit_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        order_inserts: true
+        order_updates: true

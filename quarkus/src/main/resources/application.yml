@@ -1,0 +1,12 @@
+quarkus:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/footballmanager
+    driver: org.postgresql.Driver
+    username: footballmanager
+    password: secret
+    min-size: 5
+    max-size: 15
+
+  hibernate-orm:
+    database:
+      generation: drop-and-create
