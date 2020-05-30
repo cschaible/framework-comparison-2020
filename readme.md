@@ -1,6 +1,6 @@
 # Comparison of different languages and frameworks
 
-This repository shows a sample application implemented in different programming languages (go, java, kotlin, rust) using different frameworks (fasthttp, spring-mvc, micronaut, quarkus, actix).
+This repository shows a sample application implemented in different programming languages (go, java, kotlin, rust) using different frameworks (fasthttp, spring-mvc, spring-r2dbc, micronaut, quarkus, actix).
 
 ## Application
 
@@ -49,6 +49,11 @@ All applications use a PostgreSQL database. In the `docker` directory is a Docke
 - Run the `spring-mvc/build.sh` script to build the application and package it into a docker container.  
 - Run the `spring-mvc/up.sh` script to start the docker container.  
 - Run the `spring-mvc/down.sh` script to stop the docker container.
+
+### Spring R2DBC [Java]
+- Run the `spring-r2dbc/build.sh` script to build the application and package it into a docker container.  
+- Run the `spring-r2dbc/up.sh` script to start the docker container.  
+- Run the `spring-r2dbc/down.sh` script to stop the docker container.
 
 ### Micronaut [Kotlin] (JVM)
 - Run the `micronaut/build-jvm.sh` script to build the application and package it into a docker container.  

@@ -1,0 +1,42 @@
+plugins {
+	id 'com.palantir.docker' version '0.25.0'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+	id 'org.springframework.boot' version '2.3.0.RELEASE'
+}
+
+group = 'info.novatec'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'io.r2dbc:r2dbc-pool:0.8.2.RELEASE'
+	implementation 'io.r2dbc:r2dbc-postgresql:0.8.2.RELEASE'
+	implementation 'org.springframework.data:spring-data-r2dbc:1.1.0.RELEASE'
+
+	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+
+	runtimeOnly 'org.postgresql:postgresql:42.2.12'
+
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testImplementation 'io.projectreactor:reactor-test'
+}
+
+test {
+	useJUnitPlatform()
+}
+
+docker {
+	dependsOn build
+	name "footballmanager-spring-r2dbc"
+	files bootJar.archivePath
+	buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
+}
