@@ -1,10 +1,12 @@
 # Comparison of different languages and frameworks
 
-This repository shows a sample application implemented in different programming languages (go, java, kotlin, rust) and with different frameworks (fasthttp, spring-mvc, micronaut, quarkus, actix).
+This repository shows a sample application implemented in different programming languages (go, java, kotlin, rust) using different frameworks (fasthttp, spring-mvc, micronaut, quarkus, actix).
 
-## Application use case
+## Application
 
-The use case is a simple CRUD application where "Footballers" can be managed.  
+The initial version was written by Novatec colleague [csh0711](https://github.com/csh0711/micronaut-data-graalvm-kotlin) in kotlin using micronaut (the micronaut implementation in this repo is a modified version of it).
+
+The use case is a simple CRUD application where a "Footballer" entity can be managed.  
 All applications have the same API with the following endpoints:  
 
 | Method | Endpoint | Request Body | Response |
@@ -36,7 +38,7 @@ The following software is required to build and run all applications:
 
 ## Build and run
 
-All applications use a Postgres database. In the `docker` directory is a Docker-Compose script to set it up (see PostgreSQL / pgAdmin description below).
+All applications use a PostgreSQL database. In the `docker` directory is a Docker-Compose script to set it up (see PostgreSQL / pgAdmin description below).
 
 ### PostgreSQL / pgAdmin
 - Run the `docker/up.sh` script to start a PostgreSQL Database and pgAdmin with a Docker-Compose script.  
