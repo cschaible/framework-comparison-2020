@@ -1,0 +1,32 @@
+quarkus:
+  log:
+    level: INFO
+
+  datasource:
+    # Configure default datasource for flyway
+    db-kind: postgresql
+    username: footballmanager
+    password: secret
+    jdbc:
+      url: jdbc:postgresql://localhost:5432/footballmanager
+
+    # Configure datasource for vertx
+    reactive:
+      url: vertx-reactive:postgresql://localhost:5432/footballmanager
+      max-size: 15
+
+  # Configure flyway using the default datasource
+  flyway:
+    migrate-at-start: true
+    locations: classpath:db/migration
+    validate-on-migrate: true
+    sql-migration-prefix: V
+
+  # Activate native transport
+  vertx:
+    prefer-native-transport: true
+  http:
+    so-reuse-port: true
+    tcp-quick-ack: true
+    tcp-cork: true
+    tcp-fast-open: true

@@ -1,6 +1,6 @@
 # Comparison of different languages and frameworks
 
-This repository shows a sample application implemented in different programming languages (go, java, kotlin, rust) using different frameworks (fasthttp, spring-mvc, spring-r2dbc, micronaut, quarkus, actix).
+This repository shows a sample application implemented in different programming languages (go, java, kotlin, rust) using different frameworks (actix, fasthttp, micronaut, quarkus, spring-mvc, spring-r2dbc, vert.x).
 
 ## Application
 
@@ -61,7 +61,7 @@ All applications use a PostgreSQL database. In the `docker` directory is a Docke
 - Run the `micronaut/down.sh` script to stop the docker container.
 
 ### Micronaut [Kotlin] (Native)
-- Run the `micronaut/install-native-image.sh`to install GraalVM native-imaage tool if not already installed.  
+- Run the `micronaut/install-native-image.sh` to install GraalVM native-imaage tool if not already installed.  
 - Run the `micronaut/build-native.sh` script to build the application and package it into a docker container.  
 - Run the `micronaut/up-native.sh` script to start the docker container.  
 - Run the `micronaut/down.sh` script to stop the docker container.
@@ -72,10 +72,21 @@ All applications use a PostgreSQL database. In the `docker` directory is a Docke
 - Run the `quarkus/down.sh` script to stop the docker container.
 
 ### Quarkus [Java] (Native)
-- Run the `quarkus/install-native-image.sh`to install GraalVM native-imaage tool if not already installed.  
+- Run the `quarkus/install-native-image.sh` to install GraalVM native-imaage tool if not already installed.  
 - Run the `quarkus/build-native.sh` script to build the application and package it into a docker container.  
 - Run the `quarkus/up-native.sh` script to start the docker container.  
 - Run the `quarkus/down.sh` script to stop the docker container.
+
+### Quarkus Vert.x [Java] (JVM)
+- Run the `quarkus-vertx/build-jvm.sh` script to build the application and package it into a docker container.  
+- Run the `quarkus-vertx/up-jvm.sh` script to start the docker container.  
+- Run the `quarkus-vertx/down.sh` script to stop the docker container.
+
+### Quarkus Vert.x [Java] (Native)
+- Run the `quarkus-vertx/install-native-image.sh` to install GraalVM native-imaage tool if not already installed.  
+- Run the `quarkus-vertx/build-native.sh` script to build the application and package it into a docker container.  
+- Run the `quarkus-vertx/up-native.sh` script to start the docker container.  
+- Run the `quarkus-vertx/down.sh` script to stop the docker container.
 
 ### Fasthttp [Go]
 - Run the `fasthttp/build.sh` script to build the application and package it into a docker container.  
