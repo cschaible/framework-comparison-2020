@@ -1,6 +1,6 @@
 # Comparison of different languages and frameworks
 
-This repository shows a sample application implemented in different programming languages (go, java, kotlin, rust) using different frameworks (actix, fasthttp, micronaut, quarkus, spring-mvc, spring-r2dbc, vert.x).
+This repository shows a sample application implemented in different programming languages (go, java, kotlin, rust) using different frameworks (actix, fasthttp, micronaut, quarkus, rocket, spring-mvc, spring-r2dbc, vert.x).
 
 ## Application
 
@@ -92,6 +92,12 @@ All applications use a PostgreSQL database. In the `docker` directory is a Docke
 - Run the `fasthttp/build.sh` script to build the application and package it into a docker container.  
 - Run the `fasthttp/up.sh` script to start the docker container.  
 - Run the `fasthttp/down.sh` script to stop the docker container.
+
+### Rocket [Rust]
+- Run the `rocket/setup_diesel_cli.sh` script to install the diesel (db-migration) CLI.
+- Run the `rocket/build.sh` script to build the application and package it into a docker container.  
+- Run the `rocket/up.sh` script to start the docker container.  
+- Run the `rocket/down.sh` script to stop the docker container.
 
 ### Actix [Rust]
 - Run the `actix/setup_diesel_cli.sh` script to install the diesel (db-migration) CLI.
