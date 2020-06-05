@@ -4,18 +4,14 @@
 extern crate diesel;
 #[macro_use]
 extern crate diesel_migrations;
-#[macro_use]
-extern crate log;
-#[macro_use]
-extern crate rocket;
-extern crate rocket_contrib;
 
 use std::collections::HashMap;
 
+use log::{error, info};
 use rocket::{
     config::{Config, Environment, Limits, Value},
     fairing::AdHoc,
-    Rocket,
+    routes, Rocket,
 };
 use rocket_contrib::database;
 
