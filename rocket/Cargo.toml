@@ -26,6 +26,7 @@ env_logger = "0.7.1"
 
 serde = {version = "1.0.110", features = ["derive"] }
 serde_json = "1.0.53"
+anyhow = "1.0.31"
 
 [dependencies.rocket_contrib]
 version = "0.4.5"
