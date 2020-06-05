@@ -21,7 +21,7 @@ pub fn footballers_search(
     };
     match footballers {
         Ok(footballers) => Ok(content::Json(Json(footballers))),
-        Err(e) => Err(e.into()),
+        Err(e) => Err(e),
     }
 }
 
@@ -32,7 +32,7 @@ pub fn footballer_get(
 ) -> Result<content::Json<Json<Footballer>>, Error> {
     match connection.0.find_by_id(id) {
         Ok(footballer) => Ok(content::Json(Json(footballer))),
-        Err(e) => Err(e.into()),
+        Err(e) => Err(e),
     }
 }
 
@@ -43,7 +43,7 @@ pub fn footballer_create(
 ) -> Result<content::Json<Json<Footballer>>, Error> {
     match connection.0.create(&footballer.0) {
         Ok(footballer) => Ok(content::Json(Json(footballer))),
-        Err(e) => Err(e.into()),
+        Err(e) => Err(e),
     }
 }
 
