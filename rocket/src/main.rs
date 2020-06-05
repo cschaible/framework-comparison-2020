@@ -47,9 +47,8 @@ fn main() {
 
 fn run() -> anyhow::Result<()> {
     dotenv::dotenv().ok();
-    match std::env::var("RUST_LOG") {
-        Err(_) => std::env::set_var("RUST_LOG", "warn"),
-        _ => {}
+    if std::env::var("RUST_LOG").is_err() {
+        std::env::set_var("RUST_LOG", "warn")
     };
 
     env_logger::builder().init();

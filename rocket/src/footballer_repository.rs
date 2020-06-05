@@ -7,7 +7,7 @@ use crate::{
 
 pub trait FootballerRepository {
     fn create(&self, p_footballer: &NewFootballer) -> Result<Footballer, Error>;
-    fn find_by_position(&self, p_position: &String) -> Result<Vec<Footballer>, Error>;
+    fn find_by_position(&self, p_position: &str) -> Result<Vec<Footballer>, Error>;
     fn find_by_id(&self, p_id: i64) -> Result<Footballer, Error>;
     fn find_all(&self) -> Result<Vec<Footballer>, Error>;
     fn delete_by_id(&self, p_id: i64) -> Result<bool, Error>;
@@ -22,7 +22,7 @@ impl FootballerRepository
             .get_result::<Footballer>(self)
     }
 
-    fn find_by_position(self: &Self, p_position: &String) -> Result<Vec<Footballer>, Error> {
+    fn find_by_position(self: &Self, p_position: &str) -> Result<Vec<Footballer>, Error> {
         footballer
             .filter(position.eq(p_position))
             .load::<Footballer>(self)
