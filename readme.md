@@ -111,6 +111,11 @@ All applications use a PostgreSQL database. In the `docker` directory is a Docke
 - Run the `actix-sqlx/up.sh` script to start the docker container.  
 - Run the `actix-sqlx/down.sh` script to stop the docker container.
 
+### Warp + SQLx [Rust]
+- Run the `warp/build.sh` script to build the application and package it into a docker container.
+- Run the `warp/up.sh` script to start the docker container.
+- Run the `warp/down.sh` script to stop the docker container.
+
 ## Loadtest
 
 There are two implementations of load tests. One is implemented with Locust (Python) and one with JMeter (Java/JMX).
