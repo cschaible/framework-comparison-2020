@@ -7,6 +7,7 @@ extern crate diesel_migrations;
 
 use std::collections::HashMap;
 
+use anyhow::format_err;
 use log::{error, info};
 use rocket::{
     config::{Config, Environment, Limits, Value},
@@ -38,6 +39,13 @@ fn run_db_migrations(rocket: Rocket) -> Result<Rocket, Rocket> {
 }
 
 fn main() {
+    if let Err(e) = run() {
+        error!("{:?}", e);
+        std::process::exit(1);
+    }
+}
+
+fn run() -> anyhow::Result<()> {
     dotenv::dotenv().ok();
     match std::env::var("RUST_LOG") {
         Err(_) => std::env::set_var("RUST_LOG", "warn"),
@@ -46,10 +54,8 @@ fn main() {
 
     env_logger::builder().init();
 
-    let database_url = std::env::var("DATABASE_URL").unwrap_or_else(|_| {
-        error!("DATABASE_URL environment variable not set");
-        std::process::exit(1);
-    });
+    let database_url = std::env::var("DATABASE_URL")
+        .map_err(|_| format_err!("DATABASE_URL environment variable not set"))?;
 
     let mut database_config = HashMap::new();
     let mut databases = HashMap::new();
@@ -63,10 +69,9 @@ fn main() {
         .extra("databases", databases)
         .port(8080)
         .limits(Limits::new().limit("json", 1 * 1024 * 1024))
-        .finalize()
-        .unwrap();
+        .finalize()?;
 
-    rocket::custom(config)
+    let launch_err = rocket::custom(config)
         .attach(PgDatabase::fairing())
         .attach(AdHoc::on_attach("Migrate Database", run_db_migrations))
         .mount(
@@ -79,4 +84,5 @@ fn main() {
             ],
         )
         .launch();
+    Err(launch_err.into())
 }
