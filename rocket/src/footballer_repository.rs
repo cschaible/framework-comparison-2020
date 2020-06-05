@@ -1,8 +1,9 @@
-use diesel::prelude::*;
-use diesel::result::Error;
+use diesel::{prelude::*, result::Error};
 
-use crate::footballer::{Footballer, NewFootballer};
-use crate::schema::footballer::dsl::*;
+use crate::{
+    footballer::{Footballer, NewFootballer},
+    schema::footballer::dsl::*,
+};
 
 pub trait FootballerRepository {
     fn create(&self, p_footballer: &NewFootballer) -> Result<Footballer, Error>;

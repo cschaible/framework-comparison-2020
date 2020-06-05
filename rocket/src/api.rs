@@ -2,9 +2,11 @@ use rocket_contrib::json::Json;
 
 use rocket::http::Status;
 
-use crate::footballer::{Footballer, NewFootballer};
-use crate::footballer_repository::FootballerRepository;
-use crate::PgDatabase;
+use crate::{
+    footballer::{Footballer, NewFootballer},
+    footballer_repository::FootballerRepository,
+    PgDatabase,
+};
 use diesel::result::Error;
 use rocket::response::content;
 

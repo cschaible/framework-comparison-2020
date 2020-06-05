@@ -12,11 +12,11 @@ extern crate rocket_contrib;
 
 use std::collections::HashMap;
 
-use rocket::config::Environment;
-use rocket::config::Value;
-use rocket::config::{Config, Limits};
-use rocket::fairing::AdHoc;
-use rocket::Rocket;
+use rocket::{
+    config::{Config, Environment, Limits, Value},
+    fairing::AdHoc,
+    Rocket,
+};
 use rocket_contrib::database;
 
 pub mod api;
