@@ -12,7 +12,7 @@ All applications have the same API with the following endpoints:
 | Method | Endpoint | Request Body | Response |
 | --- | --- | --- | --- |
 | GET | /footballers[?position=\<position\>] | | Footballer[] |  
-| GET | /foorballers/{id} | | Footballer |  
+| GET | /footballers/{id} | | Footballer |  
 | POST | /footballers |Footballer | Footballer |  
 | DELETE | /footballers/{id} | |
 
