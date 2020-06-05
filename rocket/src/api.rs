@@ -8,7 +8,7 @@ use crate::{
     PgDatabase,
 };
 use diesel::result::Error;
-use rocket::response::content;
+use rocket::{delete, get, post, response::content};
 
 #[get("/footballers?<position>")]
 pub fn footballers_search(
