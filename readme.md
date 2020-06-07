@@ -33,6 +33,7 @@ The following software is required to build and run all applications:
 - Java 11 (can be setup by using [sdkman](https://sdkman.io/))  
 - GraalVM (can be setup by  using [sdkman](https://sdkman.io/))  
 - libpq-devel (redhat based systems) or libpq-dev (debian based systems) for the actix example  
+- openssl-devel (redhat based systems) or libssl-dev (debian based systems) for the actix-sqlx example  
 - [rust/cargo](https://www.rust-lang.org/learn/get-started) for the actix example  
 - [go](https://golang.org/) (or download it in GoLand IDE) for the fasthttp example
 
@@ -104,6 +105,11 @@ All applications use a PostgreSQL database. In the `docker` directory is a Docke
 - Run the `actix/build.sh` script to build the application and package it into a docker container.  
 - Run the `actix/up.sh` script to start the docker container.  
 - Run the `actix/down.sh` script to stop the docker container.
+
+### Actix + SQLx [Rust]
+- Run the `actix-sqlx/build.sh` script to build the application and package it into a docker container.  
+- Run the `actix-sqlx/up.sh` script to start the docker container.  
+- Run the `actix-sqlx/down.sh` script to stop the docker container.
 
 ## Loadtest
 
