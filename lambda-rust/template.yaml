@@ -1,0 +1,48 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  lambda-rust
+  
+  SAM Template for lambda-rust
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 10
+
+Resources:
+  LambdaRustFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: LambdaRustFunction
+      Handler: name-doesnt-matter-handler
+      Runtime: provided
+      MemorySize: 16
+      CodeUri: .
+      Environment:
+        Variables:
+          DATABASE_URL: !Ref "<placeholder>"
+      Events:
+        Create:
+          Type: Api
+          Properties:
+            Path: /footballers
+            Method: post
+        Search:
+          Type: Api
+          Properties:
+            Path: /footballers
+            Method: get
+        Get:
+          Type: Api
+          Properties:
+            Path: /footballers/{id}
+            Method: get
+        Delete:
+          Type: Api
+          Properties:
+            Path: /footballers/{id}
+            Method: delete
+
+    Metadata:
+      BuildMethod: makefile
