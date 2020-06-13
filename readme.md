@@ -1,6 +1,6 @@
 # Comparison of different languages and frameworks
 
-This repository shows a sample application implemented in different programming languages (go, java, kotlin, rust) using different frameworks (actix, fasthttp, micronaut, quarkus, rocket, spring-mvc, spring-r2dbc, vert.x, warp).
+This repository shows a sample application implemented in different programming languages (go, java, kotlin, rust) using different frameworks (actix, aws-lambda, fasthttp, micronaut, quarkus, rocket, spring-mvc, spring-r2dbc, vert.x, warp).
 
 ## Application
 
@@ -115,6 +115,13 @@ All applications use a PostgreSQL database. In the `docker` directory is a Docke
 - Run the `warp/build.sh` script to build the application and package it into a docker container.
 - Run the `warp/up.sh` script to start the docker container.
 - Run the `warp/down.sh` script to stop the docker container.
+
+### AWS Lambda [Rust]
+- Run the `lambda-rust/setup-musl-support.sh` script to install MUSL (100% static linked binary).
+- Run the `lambda-rust/setup-aws-sam-cli.sh` script to install aws sam CLI (cli to run lambda function local).
+- Run the `lambda-rust/migrate.sh` script to run the db-migration.
+- Run the `lambda-rust/build.sh` script to build the lambda function.
+- Run the `lambda-rust/up.sh` script to start the lambda function.
 
 ## Loadtest
 
