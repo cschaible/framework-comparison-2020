@@ -1,3 +1,3 @@
 #!/bin/bash
-docker stop footballmanager-warp
-docker rm footballmanager-warp
+docker stop footballmanager
+docker rm footballmanager
