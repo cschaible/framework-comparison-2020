@@ -1,6 +1,6 @@
 # Comparison of different languages and frameworks
 
-This repository shows a sample application implemented in different programming languages (go, java, kotlin, rust) using different frameworks (actix, aws-lambda, fasthttp, micronaut, quarkus, rocket, spring-mvc, spring-r2dbc, vert.x, warp).
+This repository shows a sample application implemented in different programming languages (go, java, kotlin, rust, typescript) using different frameworks (actix, aws-lambda, fasthttp, hapi, micronaut, quarkus, rocket, spring-mvc, spring-r2dbc, vert.x, warp).
 
 ## Application
 
@@ -30,6 +30,7 @@ A footballer object looks like:
 The following software is required to build and run all applications:  
 - [Docker](https://www.docker.com/)  
 - [Docker-Compose](https://docs.docker.com/compose/)  
+- Node.js v12 (can be setup by using [nvm](https://github.com/nvm-sh/nvm))  
 - Java 11 (can be setup by using [sdkman](https://sdkman.io/))  
 - GraalVM (can be setup by  using [sdkman](https://sdkman.io/))  
 - libpq-devel (redhat based systems) or libpq-dev (debian based systems) for the actix example  
@@ -88,6 +89,12 @@ All applications use a PostgreSQL database. In the `docker` directory is a Docke
 - Run the `quarkus-vertx/build-native.sh` script to build the application and package it into a docker container.  
 - Run the `quarkus-vertx/up-native.sh` script to start the docker container.  
 - Run the `quarkus-vertx/down.sh` script to stop the docker container.
+
+### Hapi [TypeScript] (Node.js)
+- Run the `hapi/install-typescript.sh` to install the typescript compiler if not already installed.  
+- Run the `hapi/build.sh` script to build the application and package it into a docker container.  
+- Run the `hapi/up.sh` script to start the docker container.  
+- Run the `hapi/down.sh` script to stop the docker container.
 
 ### Fasthttp [Go]
 - Run the `fasthttp/build.sh` script to build the application and package it into a docker container.  
