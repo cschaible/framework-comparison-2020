@@ -1,0 +1,1 @@
+database: postgres://footballmanager:secret@localhost:5432/footballmanager

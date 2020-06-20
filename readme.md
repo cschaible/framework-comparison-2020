@@ -1,6 +1,6 @@
 # Comparison of different languages and frameworks
 
-This repository shows a sample application implemented in different programming languages (go, java, kotlin, rust, typescript) using different frameworks (actix, aws-lambda, fasthttp, hapi, micronaut, quarkus, rocket, spring-mvc, spring-r2dbc, vert.x, warp).
+This repository shows a sample application implemented in different programming languages (dart, go, java, kotlin, rust, typescript) using different frameworks (actix, aqueduct, aws-lambda, fasthttp, hapi, micronaut, quarkus, rocket, spring-mvc, spring-r2dbc, vert.x, warp).
 
 ## Application
 
@@ -30,9 +30,10 @@ A footballer object looks like:
 The following software is required to build and run all applications:  
 - [Docker](https://www.docker.com/)  
 - [Docker-Compose](https://docs.docker.com/compose/)  
+- [Dart](https://dart.dev/get-dart) for the dart example    
 - Node.js v12 (can be setup by using [nvm](https://github.com/nvm-sh/nvm))  
 - Java 11 (can be setup by using [sdkman](https://sdkman.io/))  
-- GraalVM (can be setup by  using [sdkman](https://sdkman.io/))  
+- GraalVM (can be setup by using [sdkman](https://sdkman.io/))  
 - libpq-devel (redhat based systems) or libpq-dev (debian based systems) for the actix example  
 - openssl-devel (redhat based systems) or libssl-dev (debian based systems) for the actix-sqlx example  
 - [rust/cargo](https://www.rust-lang.org/learn/get-started) for the actix example  
@@ -129,6 +130,18 @@ All applications use a PostgreSQL database. In the `docker` directory is a Docke
 - Run the `lambda-rust/migrate.sh` script to run the db-migration.
 - Run the `lambda-rust/build.sh` script to build the lambda function.
 - Run the `lambda-rust/up.sh` script to start the lambda function.
+
+### Aqueduct [Dart] (VM)
+- Run the `aqueduct/install-aqueduct-cli.sh` script to install the aqueduct CLI.  
+- Run the `aqueduct/build-vm.sh` script to build the application and package it into a docker container.  
+- Run the `aqueduct/up-vm.sh` script to start the docker container.  
+- Run the `aqueduct/down.sh` script to stop the docker container.
+
+### Aqueduct [Dart] (Native)
+- Run the `aqueduct/install-aqueduct-cli.sh` script to install the aqueduct CLI.  
+- Run the `aqueduct/build-native.sh` script to build the application and package it into a docker container.  
+- Run the `aqueduct/up-native.sh` script to start the docker container.  
+- Run the `aqueduct/down.sh` script to stop the docker container.
 
 ## Loadtest
 
