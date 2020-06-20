@@ -1,0 +1,4 @@
+FROM gcr.io/distroless/cc
+ADD config.yaml /config.yaml
+ADD footballmanager.aot /footballmanager
+CMD ["./footballmanager", "--isolates", "2", "--port", "80"]
