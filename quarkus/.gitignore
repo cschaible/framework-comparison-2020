@@ -2,23 +2,23 @@
 .project
 .classpath
 .settings/
+bin/
 
 # IntelliJ
 .idea
 *.ipr
 *.iml
 *.iws
-out/
 
 # NetBeans
 nb-configuration.xml
 
 # Visual Studio Code
 .vscode
+.factorypath
 
 # OSX
 .DS_Store
-Thumbs.db
 
 # Vim
 *.swp
@@ -31,11 +31,3 @@ Thumbs.db
 # Gradle
 .gradle/
 build/
-target/
-
-# JMeter
-jmeter.log
-REPORT*
-
-# Python
-__pycache__
