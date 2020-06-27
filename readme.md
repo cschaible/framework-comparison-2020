@@ -145,11 +145,16 @@ All applications use a PostgreSQL database. In the `docker` directory is a Docke
 
 ## Loadtest
 
-There are two implementations of load tests. One is implemented with Locust (Python) and one with JMeter (Java/JMX).
-The implementation with Locust is too inefficient to create enough load for the fastest frameworks on my Lenovo T480 (Intel(R) Core(TM) i7-8650U with 4 cores). Therefore another implementation with JMeter is available.
+Load tests are implemented using two different technologies. One is implemented with Locust (Python) and one with JMeter (Java).
+The implementation with Locust is too inefficient to create enough load for the fastest frameworks on my Lenovo T480 (Intel(R) Core(TM) i7-8650U with 4 cores).
+
+### Test scenarios
+In the load tests there are two independend scenarios running at the same time:
+1. Create up to 500 footballers with 1 user in parallel per minute
+2. Get a list of all footballers with 50 users in parallel and a start delay of 10 seconds. Load for each footballer in the list, the footballer resource individually.
 
 ### Locust
-
+<details>
 Locust is a load testing tool written in Python where the tests are also written in Python.
 
 #### Install
@@ -164,14 +169,44 @@ To run the locust load test the following software is addtionally required:
 
 Open a browser and navigate to http://localhost:8089/ to start the test.  
 Press Ctrl+C to stop Locust.
+</details>
 
 ### JMeter
+<details>
 
-JMeter is a load testing tool written in Java. 
+JMeter is a load testing tool written in Java.  
+There are three different convenience scripts to run load tests and generate different kind of reports.
+1. Load test of one framework with the default JMeter report
+2. Load test of one framework with the default JMeter report plus an additional summary report of 6 load test metrics plus cpu/memory metrics
+3. Load test of all frameworks with the default JMeter report plus an additional summary report of 6 load test metrics plus cpu/memory metrics plus an aggregated report sorted by metric.
 
 #### Install
-To run the JMeter loadtest [JMeter](https://jmeter.apache.org/) is required.
+To run the JMeter loadtest [JMeter](https://jmeter.apache.org/) is required.  
+To create the reports with cpu/memory metrics you need to install some python utilities (can be installed by running `loadtest_jmeter/install-monitoring-tools.sh`).  
+To create the reports with summarized / aggregated reports you need to install the [JMeter Plugins Manager](https://jmeter-plugins.org/wiki/PluginsManager/) and the following plugins:
+- Command-Line Graph Plotting Tool
+- jpgc - Standard Set
+- 5 Additional Graphs
+- Distribution/Percentile Graphs
 
 #### Run
 
-- Run the `loadtest_jmeter/run.sh` script to run the loadtest. Optionally a duration (in seconds) can be appended.
+- To run the load test type 1 do the following:
+   - Start the database by running `docker/up.sh` script. 
+     If necessary run the `docker/reset-db.sh` script before re-running the load test.
+   - Start the application with the `<framework>/up.sh` script.
+   - Run the `loadtest_jmeter/run.sh` script to start the load test. 
+      - Optionally a duration (in seconds) can be appended.
+- To run the load test type 2 do the following:
+   - Start the database by running `docker/up.sh` script. 
+     If necessary run the `docker/reset-db.sh` script before re-running the load test.
+   - Start the application with the `<framework>/up.sh` script.
+   - Run the `loadtest_jmeter/run-with-monitoring.sh` script to start the load test. 
+      - Optionally a duration (in seconds) can be appended.
+- To run the load test type 3 do the following:
+   - Start the database by running `docker/up.sh` script. 
+   - Run the `loadtest_jmeter/run-with-monitoring-all.sh` script to start the load test. 
+      - Optionally a duration (in seconds) for the load test of each framework can be appended (default is 120s).
+      - Additionally to the duration the "build" parameter can be appened to build all services. Ensure that the GraalVM is configured as your default jvm and the rust nightly toolchain is set as default toolchain.
+
+</details>
