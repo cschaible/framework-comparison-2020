@@ -1,12 +1,14 @@
 use actix_http::ResponseBuilder;
-use actix_web::{delete, Error, get, HttpRequest, HttpResponse, post};
-use actix_web::web::{Data, Json, Query};
+use actix_web::{
+    delete, get, post,
+    web::{Data, Json, Query},
+    Error, HttpRequest, HttpResponse,
+};
 use anyhow::Result;
 use serde::Deserialize;
 use sqlx::PgPool;
 
-use crate::footballer::NewFootballer;
-use crate::footballer_repository::FootballerRepository;
+use crate::{footballer::NewFootballer, footballer_repository::FootballerRepository};
 
 #[derive(Deserialize)]
 pub struct SearchParameters {
@@ -33,7 +35,10 @@ pub async fn footballer_get(req: HttpRequest, db: Data<PgPool>) -> Result<HttpRe
     Ok(db
         .find_by_id(id)
         .await
-        .map(|footballer| HttpResponse::Ok().json(footballer))
+        .map(|footballer| match footballer {
+            Some(result) => HttpResponse::Ok().json(result),
+            None => HttpResponse::NotFound().finish(),
+        })
         .map_err(handle_error)?)
 }
 
@@ -45,7 +50,7 @@ pub async fn footballer_create(
     Ok(db
         .create(&footballer.into_inner())
         .await
-        .map(|footballer| HttpResponse::Ok().json(footballer))
+        .map(|footballer| HttpResponse::Created().json(footballer))
         .map_err(handle_error)?)
 }
 

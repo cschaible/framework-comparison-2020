@@ -24,7 +24,7 @@ async fn migrate(url: String) -> Result<(), BlockingError<anyhow::Error>> {
             .set_db_host(parsed_url.host_str().unwrap())
             .set_db_name(&parsed_url.path().to_string()[1..])
             .set_db_pass(parsed_url.password().unwrap())
-            .set_db_port(format!("{}", parsed_url.port().unwrap()).as_str())
+            .set_db_port(&format!("{}", parsed_url.port().unwrap()))
             .set_db_user(parsed_url.username());
 
         warn!("Migrate Database");
