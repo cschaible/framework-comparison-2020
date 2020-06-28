@@ -1,7 +1,6 @@
-use serde::Deserialize;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug, Serialize)]
+#[derive(sqlx::FromRow, Clone, Debug, Eq, Ord, PartialEq, PartialOrd, Serialize)]
 pub struct Footballer {
     pub id: i64,
     #[serde(rename = "firstName")]
