@@ -9,9 +9,13 @@ class FootballerController extends ResourceController {
 
   @Operation.post()
   Future<Response> create(@Bind.body() FootballerResource resource) async {
-    final query = Query<Footballer>(context)..values = resource.asFootballer();
-    final savedFootballer = await query.insert();
-    return Response.ok(savedFootballer.asResource());
+    final savedFootballer = await context.transaction((transaction) async {
+      final query = Query<Footballer>(transaction)
+        ..values = resource.asFootballer();
+      return await query.insert();
+    });
+
+    return Response(201, null, savedFootballer.asResource());
   }
 
   @Operation.get()
@@ -40,9 +44,11 @@ class FootballerController extends ResourceController {
 
   @Operation.delete("id")
   Future<Response> deleteById(@Bind.path("id") int id) async {
-    final query = Query<Footballer>(context);
-    query.where((footballer) => footballer.id).equalTo(id);
-    await query.delete();
+    await context.transaction((transaction) async {
+      final query = Query<Footballer>(transaction);
+      query.where((footballer) => footballer.id).equalTo(id);
+      await query.delete();
+    });
     return Response.noContent();
   }
 
