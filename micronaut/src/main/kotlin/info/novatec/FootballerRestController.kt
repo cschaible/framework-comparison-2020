@@ -1,10 +1,12 @@
 package info.novatec
 
+import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.*
 import java.util.*
+import javax.transaction.Transactional
 
 @Controller("/footballers")
-class FootballerRestController(
+open class FootballerRestController(
         private val repository: FootballerRepository
 ) {
 
@@ -23,12 +25,15 @@ class FootballerRestController(
     }
 
     @Post("/")
-    fun create(@Body footballer: Footballer): Footballer {
-        return repository.save(footballer)
+    @Transactional
+    open fun create(@Body footballer: Footballer): HttpResponse<Footballer> {
+        return HttpResponse.created(repository.save(footballer))
     }
 
     @Delete("/{id}")
-    fun delete(id: Long) {
-        return repository.deleteById(id)
+    @Transactional
+    open fun delete(id: Long): HttpResponse<Footballer> {
+        repository.deleteById(id)
+        return HttpResponse.noContent<Footballer>()
     }
 }
