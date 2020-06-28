@@ -10,6 +10,7 @@ use std::collections::HashMap;
 use anyhow::format_err;
 use log::{error, info};
 use rocket::{
+    catchers,
     config::{Config, Environment, Limits, Value},
     fairing::AdHoc,
     routes, Rocket,
@@ -82,6 +83,7 @@ fn run() -> anyhow::Result<()> {
                 api::footballer_delete
             ],
         )
+        .register(catchers![api::not_found])
         .launch();
     Err(launch_err.into())
 }
