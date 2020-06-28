@@ -1,9 +1,10 @@
-use crate::footballer::Footballer;
 use anyhow::Context;
 use futures::stream::TryStreamExt;
 use serde::Deserialize;
 use sqlx::{postgres::PgQueryAs, PgConnection, Pool};
 use tracing::info;
+
+use crate::footballer::Footballer;
 
 #[derive(Deserialize, Debug)]
 pub struct SearchFootballersOptions {
@@ -47,21 +48,33 @@ pub(crate) async fn create_footballer(
     info!("create_footballer ({:?})", create_request);
     let query =
         "insert into footballer(first_name, last_name, position) values ($1, $2, $3) returning *";
-    sqlx::query_as::<_, Footballer>(query)
+
+    let mut tx = pool.begin().await?;
+
+    let footballer = sqlx::query_as::<_, Footballer>(query)
         .bind(create_request.first_name)
         .bind(create_request.last_name)
         .bind(create_request.position)
-        .fetch_one(&pool)
+        .fetch_one(&mut tx)
         .await
-        .context("create_footballer")
+        .context("create_footballer");
+
+    tx.commit().await?;
+    footballer
 }
 
 pub(crate) async fn delete_footballer(pool: Pool<PgConnection>, id: i64) -> anyhow::Result<u64> {
     info!("delete_footballer ({:?})", id);
     let query = "delete from footballer where id = $1";
-    sqlx::query(query)
+
+    let mut tx = pool.begin().await?;
+
+    let deleted = sqlx::query(query)
         .bind(id)
-        .execute(&pool)
+        .execute(&mut tx)
         .await
-        .context("delete_footballer")
+        .context("delete_footballer");
+
+    tx.commit().await?;
+    deleted
 }
