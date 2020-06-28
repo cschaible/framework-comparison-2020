@@ -1,8 +1,11 @@
 package info.novatec;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,7 +15,6 @@ import java.util.Optional;
 public class FootballerResource {
 
   @GET
-  @Transactional
   public List<Footballer> search(@QueryParam("position") String position) {
     if (position == null) {
       return Footballer.findAll().list();
@@ -23,22 +25,27 @@ public class FootballerResource {
 
   @GET
   @Path("/{id}")
-  @Transactional
-  public Optional<Footballer> get(@PathParam("id") Long id) {
-    return Footballer.find("id", id).firstResultOptional();
+  public Response get(@PathParam("id") Long id) {
+    Optional<PanacheEntityBase> footballer = Footballer.find("id", id).firstResultOptional();
+    if (footballer.isPresent()) {
+      return Response.ok(footballer.get()).build();
+    } else {
+      return Response.status(Response.Status.NOT_FOUND).build();
+    }
   }
 
   @POST
   @Transactional
-  public Footballer create(Footballer footballer) {
+  public Response create(Footballer footballer) {
     footballer.persist();
-    return footballer;
+    return Response.status(Response.Status.CREATED).entity(footballer).build();
   }
 
   @DELETE
   @Path("/{id}")
   @Transactional
-  public void delete(@PathParam("id") Long id) {
+  public Response delete(@PathParam("id") Long id) {
     Footballer.delete("id", id);
+    return Response.noContent().build();
   }
 }
