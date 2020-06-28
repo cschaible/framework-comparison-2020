@@ -9,7 +9,15 @@ type FootballerRepository struct {
 }
 
 func (repo FootballerRepository) create(footballer Footballer) (*Footballer, error) {
-	err := repo.db.Insert(&footballer)
+	var tx, err = repo.db.Begin()
+	if err != nil {
+		return nil, err
+	}
+	err = tx.Insert(&footballer)
+	if err != nil {
+		return nil, err
+	}
+	err = tx.Commit()
 	if err != nil {
 		return nil, err
 	}
@@ -43,13 +51,25 @@ func (repo FootballerRepository) findAll() (*Footballers, error) {
 	return &footballers, nil
 }
 
-func (repo FootballerRepository) deleteById(id int64)  error {
-	footballer, err := repo.findById(id)
+func (repo FootballerRepository) deleteById(id int64) error {
+	var tx, err = repo.db.Begin()
 	if err != nil {
 		return err
 	}
-	if footballer != nil {
-		return repo.db.Delete(footballer)
+	footballer, err := repo.findById(id)
+	if err != nil && pg.ErrNoRows.Error() == err.Error() {
+		return nil
+	} else if err != nil {
+		return err
 	}
+	err = tx.Delete(footballer)
+	if err != nil {
+		return err
+	}
+	err = tx.Commit()
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
