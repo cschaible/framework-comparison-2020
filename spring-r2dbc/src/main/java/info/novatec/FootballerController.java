@@ -2,6 +2,8 @@ package info.novatec;
 
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -22,17 +24,20 @@ public class FootballerController {
   }
 
   @GetMapping("/footballers/{id}")
-  public Mono<Footballer> findOne(@PathVariable Long id) {
-    return footballerRepository.findById(id);
+  public Mono<ResponseEntity<Footballer>> findOne(@PathVariable Long id) {
+    return footballerRepository
+        .findById(id)
+        .map(ResponseEntity::ok)
+        .switchIfEmpty(Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).build()));
   }
 
   @PostMapping("/footballers")
-  public Mono<Footballer> create(@RequestBody Publisher<Footballer> footballer) {
-    return footballerRepository.create(footballer);
+  public ResponseEntity<Mono<Footballer>> create(@RequestBody Publisher<Footballer> footballer) {
+    return ResponseEntity.status(HttpStatus.CREATED).body(footballerRepository.create(footballer));
   }
 
   @DeleteMapping("/footballers/{id}")
-  public Mono<Void> delete(@PathVariable Long id) {
-    return footballerRepository.deleteById(id);
+  public ResponseEntity<Mono<Void>> delete(@PathVariable Long id) {
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).body(footballerRepository.deleteById(id));
   }
 }

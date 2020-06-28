@@ -19,3 +19,5 @@ spring:
       ddl-auto: validate
     show-sql: false
     generate-ddl: false
+  main:
+    allow-bean-definition-overriding: true

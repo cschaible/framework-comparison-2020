@@ -10,13 +10,19 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.r2dbc.connectionfactory.R2dbcTransactionManager;
 import org.springframework.data.r2dbc.core.DatabaseClient;
+import org.springframework.transaction.ReactiveTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.reactive.TransactionalOperator;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.sql.DataSource;
 
 @Configuration
+@EnableTransactionManagement
 public class R2dbcConfig {
 
   @Value("${spring.datasource.initial-pool-size}")
@@ -56,6 +62,13 @@ public class R2dbcConfig {
   @Bean
   public DatabaseClient databaseClient(ConnectionPool connectionPool) {
     return DatabaseClient.create(connectionPool);
+  }
+
+  @Bean
+  @Primary
+  public ReactiveTransactionManager transactionManager(
+      PostgresqlConnectionFactory connectionFactory) {
+    return new R2dbcTransactionManager(connectionFactory);
   }
 
   /**

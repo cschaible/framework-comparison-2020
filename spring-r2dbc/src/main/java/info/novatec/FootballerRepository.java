@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.r2dbc.core.DatabaseClient;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -13,6 +14,7 @@ public class FootballerRepository {
 
   @Autowired private DatabaseClient databaseClient;
 
+  @Transactional
   public Mono<Footballer> create(Publisher<Footballer> footballer) {
     return databaseClient
         .insert()
@@ -30,6 +32,7 @@ public class FootballerRepository {
         .one();
   }
 
+  @Transactional(readOnly = true)
   public Flux<Footballer> findByPosition(String position) {
     return databaseClient
         .select()
@@ -52,6 +55,7 @@ public class FootballerRepository {
     return databaseClient.select().from(Footballer.class).fetch().all();
   }
 
+  @Transactional
   public Mono<Void> deleteById(Long id) {
     return databaseClient
         .delete()
