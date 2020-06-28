@@ -3,10 +3,13 @@ import {getManager} from "typeorm";
 import {Footballer} from "./entity/Footballer";
 
 export async function create(request: Hapi.Request, h: Hapi.ResponseToolkit) {
-    let footballerRepository = getManager().getRepository(Footballer);
+    let footballer = await getManager().transaction(async entityManager => {
+        let footballerRepository = entityManager.getRepository(Footballer);
 
-    const footballer = <Footballer>request.payload;
-    let savedFootballer = await footballerRepository.save(footballer).catch(logError);
+        const footballer = <Footballer>request.payload;
+        return await footballerRepository.save(footballer).catch(logError);
+    });
+
     return h.response(footballer).code(201);
 }
 
@@ -31,13 +34,15 @@ export async function findById(request: Hapi.Request, h: Hapi.ResponseToolkit) {
 }
 
 export async function deleteById(request: Hapi.Request, h: Hapi.ResponseToolkit) {
-    let footballerRepository = getManager().getRepository(Footballer);
+    await getManager().transaction(async entityManager => {
+        let footballerRepository = entityManager.getRepository(Footballer);
 
-    await footballerRepository.findOne(`${request.params.id}`).then(footballer => {
-        if (footballer !== undefined) {
-            footballerRepository.remove([footballer]).catch(logError);
-        }
-    }).catch(logError);
+        await footballerRepository.findOne(`${request.params.id}`).then(footballer => {
+            if (footballer !== undefined) {
+                footballerRepository.remove([footballer]).catch(logError);
+            }
+        }).catch(logError);
+    });
     return h.response({}).code(204);
 }
 
