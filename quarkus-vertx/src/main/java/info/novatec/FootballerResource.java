@@ -6,8 +6,10 @@ import io.vertx.mutiny.pgclient.PgPool;
 import org.jboss.resteasy.annotations.jaxrs.QueryParam;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 @Path("/footballers")
 @Produces(MediaType.APPLICATION_JSON)
@@ -27,18 +29,35 @@ public class FootballerResource {
 
   @GET
   @Path("/{id}")
-  public Uni<Footballer> get(@PathParam("id") Long id) {
-    return Footballer.findOne(client, id);
+  public Uni<Response> get(@PathParam("id") Long id) {
+    return Footballer.findOne(client, id)
+        .onItem()
+        .apply(
+            footballer -> {
+              if (footballer == null) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+              } else {
+                return Response.ok(footballer).build();
+              }
+            });
   }
 
+  @Transactional
   @POST
-  public Uni<Footballer> create(Footballer footballer) {
-    return Footballer.create(client, footballer);
+  public Uni<Response> create(Footballer footballer) {
+    return Footballer.create(client, footballer)
+        .onItem()
+        .apply(
+            savedFootballer ->
+                Response.status(Response.Status.CREATED).entity(savedFootballer).build());
   }
 
+  @Transactional
   @DELETE
   @Path("/{id}")
-  public Uni<Boolean> delete(@PathParam("id") Long id) {
-    return Footballer.delete(client, id);
+  public Uni<Response> delete(@PathParam("id") Long id) {
+    return Footballer.delete(client, id)
+        .onItem()
+        .apply(deleted -> Response.noContent().entity(deleted).build());
   }
 }
