@@ -34,7 +34,10 @@ pub async fn footballer_get(
     let id: i64 = req.match_info().query("id").parse().unwrap();
     Ok(web::block(move || footballer_repository.find_by_id(id))
         .await
-        .map(|footballer| HttpResponse::Ok().json(footballer))
+        .map(|footballer| match footballer {
+            Some(result) => HttpResponse::Ok().json(result),
+            None => HttpResponse::NotFound().finish(),
+        })
         .map_err(|_| HttpResponse::InternalServerError())?)
 }
 
@@ -46,7 +49,7 @@ pub async fn footballer_create(
     Ok(
         web::block(move || footballer_repository.create(footballer.into_inner()))
             .await
-            .map(|footballer| HttpResponse::Ok().json(footballer))
+            .map(|footballer| HttpResponse::Created().json(footballer))
             .map_err(|_| HttpResponse::InternalServerError())?,
     )
 }
