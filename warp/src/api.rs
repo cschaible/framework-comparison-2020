@@ -1,14 +1,14 @@
+use std::convert::Infallible;
+
 use serde::Deserialize;
 use sqlx::{PgConnection, Pool};
+use tracing::{error, info};
 use warp::{
     body,
     http::StatusCode,
     reject::{self, Reject},
     reply, Filter, Rejection,
 };
-
-use std::convert::Infallible;
-use tracing::{error, info};
 
 pub fn search_footballers(
     pool: Pool<PgConnection>,
@@ -76,7 +76,10 @@ pub fn create_footballer(
             match crate::repository::create_footballer(pool, create_request).await {
                 Ok(created) => {
                     info!("Created footballer {:?}", created);
-                    Ok(reply::json(&created))
+                    Ok(reply::with_status(
+                        reply::json(&created),
+                        StatusCode::CREATED,
+                    ))
                 }
                 Err(e) => {
                     error!("Error: {:?}", e);
